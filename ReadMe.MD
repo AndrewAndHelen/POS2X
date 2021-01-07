@@ -32,9 +32,7 @@ prerequisites: cmake version>=3.0
 ## Functions
 * The format of image
 **(&lambda;, &omega;, H, heading, pitch, roll)**
->*Tip：(&lambda;, &omega;, H) is object locations in lat–long–height.*  
-
->*Tip：(heading, pitch, roll) is orientations in a heading–pitch–roll format follow NED coordinate system*
+>*Tip：(&lambda;, &omega;, H) is object locations in lat–long–height.(heading, pitch, roll) is orientations in a heading–pitch–roll format follow NED coordinate system*
 
 ## Contact
 
