@@ -1,4 +1,4 @@
-#include "pos2ecf.h"
+#include "pos2ecf.hpp"
 #ifdef  _WIN32
 #include<io.h>
 #include<direct.h>
@@ -22,6 +22,47 @@ static void Usage(const char* pszErrorMsg = NULL)
 		fprintf(stderr, "\nFAILURE: %s\n", pszErrorMsg);
 
 	exit(1);
+}
+
+template<typename Vector3X>
+bool ReadPosData(std::string posAbsPath, Vector3X& wgs84Point, Vector3X& nedPos)
+{
+	std::fstream fp(posAbsPath.c_str());
+	if (!fp)
+	{
+		std::cout << "couldn't open file!";
+		return false;
+	}
+	std::string strLine;
+	for (int i = 0; i < 3; i++)
+	{
+		std::getline(fp, strLine, ',');
+		wgs84Point[i] = atof(strLine.c_str());
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		std::getline(fp, strLine, ',');
+		nedPos[i] = atof(strLine.c_str());
+	}
+
+	fp.close();
+	return true;
+}
+
+template<typename Vector3X>
+bool WriteEcefData(std::string ecefAbsPath, Vector3X& ecefPoint, Vector3X& ecefPos)
+{
+	std::ofstream fp(ecefAbsPath.c_str());
+	if (!fp)
+	{
+		std::cout << "couldn't create such file!";
+		return false;
+	}
+	fp << std::setiosflags(std::ios::fixed) << std::setprecision(7) << ecefPoint[0] << "," << ecefPoint[1] << "," << ecefPoint[2] << ","
+		<< ecefPos[0] << "," << ecefPos[1] << "," << ecefPos[2];
+
+	fp.close();
+	return true;
 }
 
 int main(int argc, char* argv[])
@@ -69,14 +110,17 @@ int main(int argc, char* argv[])
 	}
 #endif
 
-	ReadPosData(srcPosPath, wgs84Point, nedPos);
+	std::cout << "--- read pos data---" << std::endl;
+	bool flag = ReadPosData<Eigen::Vector3d>(srcPosPath, wgs84Point, nedPos);
 
-	POS2ECF pos2ecf(wgs84Point, nedPos);
+	std::cout << "--- pos2ecf ---" << std::endl;
+	POS2ECF<double> pos2ecf(wgs84Point, nedPos);
 	pos2ecf.Caculate();
-
 	Eigen::Vector3d ecefPoint = pos2ecf.GetEcefPoint();
 	Eigen::Vector3d ecefPos = pos2ecf.GetEcefPos();
-	WriteEcefData(objPosPath, ecefPoint, ecefPos);
+
+	std::cout << "--- write pos data ---" << std::endl;
+	flag = WriteEcefData<Eigen::Vector3d>(objPosPath, ecefPoint, ecefPos);
 
 	return 0;
 }
