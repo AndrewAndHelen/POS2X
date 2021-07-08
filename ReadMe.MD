@@ -1,6 +1,6 @@
-# pos2ecf
+# POS2X
 
-a tool which could transfer POS to ECEF
+a tool which could transfer POS
 
 
 ## Dependencies
@@ -11,8 +11,8 @@ a tool which could transfer POS to ECEF
 prerequisites: cmake version>=3.0
 
 ```
-1. git clone https://github.com/AndrewAndJenny/pos2ecf.git
-2. cd pos2ecf
+1. git clone https://github.com/AndrewAndJenny/POS2X.git
+2. cd POS2X
 ```
 
 **in the cmake-bash**
@@ -30,9 +30,12 @@ prerequisites: cmake version>=3.0
 ```
 
 ## Functions
-* The format of image
-**(&lambda;, &omega;, H, heading, pitch, roll)**
->*Tip：(&lambda;, &omega;, H) is object locations in lat–long–height.(heading, pitch, roll) is orientations in a heading–pitch–roll format follow NED coordinate system*
+- [x] convert WGS84 longitude, latitude, ellipsoidal height, NED heading pitch roll to WGS84 X, Y, Z, ECEF heading pitch roll
+- [x] convert WGS84 longitude, latitude, ellipsoidal height, NED heading pitch roll to WGS84 X, Y, Z, ECEF yaw, pitch, roll
+- [x] convert WGS84 longitude, latitude, ellipsoidal height, NED yaw, pitch, roll to CGCS2000(GAUSS) X, Y, Z, PHOTOGRAMMETRY  omega, phi, kappa
+- [x] convert WGS84 longitude, latitude, ellipsoidal height, NED yaw, pitch, roll to CGCS2000(UTM) X, Y, Z, PHOTOGRAMMETRY  omega, phi, kappa
+- [x] convert WGS84 omega, phi, kappa to ECEF omega, phi, kappa
+- [x] convert SMART3D omega, phi, kappa to PHOTOGRAMMETRY omega, phi, kappa
 
 ## Contact
 
