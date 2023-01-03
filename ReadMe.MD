@@ -11,7 +11,7 @@ a tool which could transfer POS
 prerequisites: cmake version>=3.0
 
 ```
-1. git clone https://github.com/AndrewAndJenny/POS2X.git
+1. git clone https://github.com/AndrewAndHelen/POS2X.git
 2. cd POS2X
 ```
 
